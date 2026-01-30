@@ -1,0 +1,16 @@
+Copyright (c) 2024-2026 Kevin Anthony Kaw
+
+This software is provided for non-commercial use only.
+
+Permission is granted to use, copy, modify, and distribute this software
+for academic, research, and other non-commercial purposes, provided that
+the above copyright notice and this permission notice appear in all copies.
+
+Commercial use of this software, in whole or in part, is strictly prohibited
+without prior written permission from the copyright holder.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
+LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
