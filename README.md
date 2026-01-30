@@ -2,7 +2,7 @@
 
 ## Overview
 
-The FELIXCE Python Data Analysis Tool is a specialized software package designed for automated processing and analysis of infrared photodissociation spectroscopy data from the FELIX (Free Electron Laser for Infrared eXperiments) laboratory. This tool enables researchers to efficiently analyze mass spectrometry data to determine infrared yield spectra by comparing molecular ion signal intensities with and without IR radiation, providing crucial insights into gas-phase molecular structure and dynamics. This tool streamlines the process of data analysis enjabling researchers to focus on scientific interpreation rather than data processing challenges
+The FELIXCE Python Data Analysis Tool is a specialized software package designed for automated processing and analysis of infrared photodissociation spectroscopy data from the FELIX (Free Electron Laser for Infrared eXperiments) laboratory. This tool enables researchers to efficiently analyze mass spectrometry data to determine infrared yield spectra by comparing molecular ion signal intensities with and without IR radiation, providing crucial insights into gas-phase molecular structure and dynamics. This tool streamlines the process of data analysis enabling researchers to focus on scientific interpretation rather than data processing challenges
 
 ## Key Features
 
