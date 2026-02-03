@@ -52,14 +52,14 @@ if st.button("**:blue[#1]** ✨ Perform baseline correction - full range"):
     compilation_baseline_corrected_data = baseline_correction_fullrange.baseline_correction_fullrange_sum(compiled_data, unique_wavenumbers, baseline_range_indices)
 
     # export mass spectra
-    export = pd.DataFrame({
+    export_MassSpectra = pd.DataFrame({
         "Mass (amu)": x_mass,
         "Mass per atom (amu)": x_mass_perAtom,
         compilation_baseline_corrected_data[plot_wavenumber].columns[-2]: compilation_baseline_corrected_data[plot_wavenumber].iloc[:, -2],
         compilation_baseline_corrected_data[plot_wavenumber].columns[-1]: compilation_baseline_corrected_data[plot_wavenumber].iloc[:, -1]
     })
     # export.to_csv(rf"{file_directory}/output/MassSpectra_{complex}_{plot_wavenumber}cm-1.csv", index=False)
-    st.session_state["export_baseline_corrected_data"] = export
+    st.session_state["export_MassSpectra"] = export_MassSpectra
 
     st.session_state["compilation_baseline_corrected_data"] = compilation_baseline_corrected_data
     st.success("Success! 😎")
@@ -70,16 +70,20 @@ if st.button("**:blue[#1]** ✨ Perform baseline correction - full range"):
     # print(compilation_baseline_corrected_data[plot_wavenumber].head())
 
 if st.button("**:blue[#2]** 🚢 Export baseline corrected data"):
-    if "export_baseline_corrected_data" not in st.session_state:
+    if "export_MassSpectra" not in st.session_state:
         st.error("⚠️ Please perform baseline correction first.")
         st.stop()
     else:
-        export = st.session_state.get("export_baseline_corrected_data", None)
         output_directory = st.session_state.get("output_directory", None)
-        output_name = f"MassSpectra_{complex}_{plot_wavenumber}cm⁻¹.csv"
-        output_fullpath = os.path.join(output_directory, output_name)
-        export.to_csv(output_fullpath, index=False)
-        st.success(rf"Exported baseline corrected mass spectra @ {output_fullpath}")
+        export_MassSpectra = st.session_state.get("export_MassSpectra", None)
+        export_baseline_corrected = st.session_state.get("compilation_baseline_corrected_data", None)[plot_wavenumber]
+        output_name_MassSpectra = f"MassSpectra_{complex}_{plot_wavenumber}cm⁻¹.csv"
+        output_name_BaselineCorrected = f"BaselineCorrected_{complex}_{plot_wavenumber}cm⁻¹.csv"
+        output_fullpath_MassSpectra = os.path.join(output_directory, output_name_MassSpectra)
+        output_fullpath_BaselineCorrected = os.path.join(output_directory, output_name_BaselineCorrected)
+        export_MassSpectra.to_csv(output_fullpath_MassSpectra, index=False)
+        export_baseline_corrected.to_csv(output_fullpath_BaselineCorrected, index=False)
+        st.success(rf"Exported baseline corrected mass spectra @ `{output_fullpath_MassSpectra}` and baseline corrected data @ `{output_fullpath_BaselineCorrected}`")
 
 st.markdown("#### Plot parameters")
 

@@ -45,7 +45,7 @@ with col3:
     st.session_state["alpha"] = float(st.text_input("alpha", value = st.session_state.get("alpha", defaults['alpha'])))
     st.session_state["dataset_length"] = st.number_input("length of dataset in the time axis", value = st.session_state.get("dataset_length", None))
 
-
+    
 if st.button("✍️ Register inputs"):
 
     # Initialize variables

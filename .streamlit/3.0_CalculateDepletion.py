@@ -18,8 +18,8 @@ def load_defaults():
             # Update defaults with values from file
             defaults["depletion_ymin"] = config.getfloat('Plot Parameters', 'depletion_ymin')
             defaults["depletion_ymax"] = config.getfloat('Plot Parameters', 'depletion_ymax')
-            defaults["IRyield_ymin"] = config.getfloat('Plot Parameters', 'IRyield_ymin')
-            defaults["IRyield_ymax"] = config.getfloat('Plot Parameters', 'IRyield_ymax')
+            defaults["ln_depletion_ymin"] = config.getfloat('Plot Parameters', 'ln_depletion_ymin')
+            defaults["ln_depletion_ymax"] = config.getfloat('Plot Parameters', 'ln_depletion_ymax')
             defaults["scan_width"] = config.getfloat('Integration Parameters', 'scan_width')
             defaults["save_output"] = config.getboolean('Integration Parameters', 'save_output')
         except (configparser.Error, ValueError) as e:
@@ -108,8 +108,8 @@ with col6:
     st.markdown("#### ")
     st.session_state["depletion_ymin"] = float(st.text_input("Depletion: minimum y-value", st.session_state.get("depletion_ymin", defaults.get("depletion_ymin", None))))
     st.session_state["depletion_ymax"] = float(st.text_input("Depletion: maximum y-value", st.session_state.get("depletion_ymax", defaults.get("depletion_ymax", None))))
-    st.session_state["ln_depletion_ymin"] = float(st.text_input("-ln(depletion): minimum y-value", st.session_state.get("ln_depletion_ymin", defaults.get("IRyield_ymin", None))))
-    st.session_state["ln_depletion_ymax"] = float(st.text_input("-ln(depletion): maximum y-value", st.session_state.get("ln_depletion_ymax", defaults.get("IRyield_ymax", None))))
+    st.session_state["ln_depletion_ymin"] = float(st.text_input("-ln(depletion): minimum y-value", st.session_state.get("ln_depletion_ymin", defaults.get("ln_depletion_ymin", None))))
+    st.session_state["ln_depletion_ymax"] = float(st.text_input("-ln(depletion): maximum y-value", st.session_state.get("ln_depletion_ymax", defaults.get("ln_depletion_ymax", None))))
 
 if st.button("✨ Analyze!"):
     # Error checking
