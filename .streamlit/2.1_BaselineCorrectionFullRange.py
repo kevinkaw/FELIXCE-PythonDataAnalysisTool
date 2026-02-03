@@ -83,7 +83,9 @@ if st.button("**:blue[#2]** 🚢 Export baseline corrected data"):
         output_fullpath_BaselineCorrected = os.path.join(output_directory, output_name_BaselineCorrected)
         export_MassSpectra.to_csv(output_fullpath_MassSpectra, index=False)
         export_baseline_corrected.to_csv(output_fullpath_BaselineCorrected, index=False)
-        st.success(rf"Exported baseline corrected mass spectra @ `{output_fullpath_MassSpectra}` and baseline corrected data @ `{output_fullpath_BaselineCorrected}`")
+        st.success(rf"Export successful!", icon="✅")
+        st.success(rf"Baseline corrected mass spectra @ '`{output_fullpath_MassSpectra}`'")
+        st.success(rf"Baseline corrected data @ '`{output_fullpath_BaselineCorrected}`'")
 
 st.markdown("#### Plot parameters")
 

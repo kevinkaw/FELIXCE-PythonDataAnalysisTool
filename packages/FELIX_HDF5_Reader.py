@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import h5py
 import os
+from pathlib import Path
 
 __all__ = ['FELIX_HDF5_Reader']
 
@@ -85,17 +86,43 @@ class FELIX_HDF5_Reader:
         Args:
             base_directory (str): Base directory path
         """
+                # Convert to absolute path to avoid confusion about working directory
         if base_directory:
-            self.directory_output = os.path.join(base_directory, 'output')
-            try:
-                os.makedirs(self.directory_output, exist_ok=True)
-                print(f"Output directory ready: {self.directory_output}")
-            except Exception as e:
-                print(f"Warning: Could not create output directory {self.directory_output}: {e}")
-                self.directory_output = None
-        else:
             self.directory_output = None
-            print("No base directory provided - cannot export any files.")
+            abs_directory = Path(base_directory).expanduser().resolve()
+            print(f"Input directory: {base_directory}")
+            print(f"Resolved to: {abs_directory}")
+
+            try:
+                if abs_directory.is_dir():
+                    print(f"Using existing directory: {abs_directory}")
+                    self.directory_output = str(abs_directory)
+                    return self.directory_output
+                else:
+                    os.makedirs(abs_directory, exist_ok=False)
+                    print(f"Output directory created: {abs_directory}")
+                    self.directory_output = str(abs_directory)
+                    return self.directory_output
+            except Exception as e:
+                print(f"Warning: Could not create output directory {abs_directory}: {e}")
+                abs_directory = None
+                self.directory_output = abs_directory
+            return self.directory_output
+        else:
+            print("No directory provided")
+            return None
+
+        # if base_directory:
+        #     self.directory_output = os.path.join(base_directory, 'output')
+        #     try:
+        #         os.makedirs(self.directory_output, exist_ok=True)
+        #         print(f"Output directory ready: {self.directory_output}")
+        #     except Exception as e:
+        #         print(f"Warning: Could not create output directory {self.directory_output}: {e}")
+        #         self.directory_output = None
+        # else:
+        #     self.directory_output = None
+        #     print("No base directory provided - cannot export any files.")
 
     
     def extract_data(self, file=None):

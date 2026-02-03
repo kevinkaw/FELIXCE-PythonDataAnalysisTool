@@ -3,6 +3,7 @@ import h5py
 import time
 import configparser
 import os
+from pathlib import Path
 from packages.FELIX_HDF5_Reader import *
 
 # Import variables
@@ -25,7 +26,8 @@ defaults = load_defaults()
 uploaded_files = st.file_uploader("Select HDF5 files to read (adds files to existing list, click `x` to remove)", accept_multiple_files=True, type=["h5"])
 st.session_state["file_directory"] = st.text_input("Enter file directory where data is saved. All outputs will be saved here.", value= st.session_state.get("file_directory", defaults['file_directory']))
 st.session_state["step_size"] = st.number_input("Enter the step size of your scans.", value=st.session_state.get("step_size", defaults['step_size']))
-st.session_state["output_directory"] = os.path.join(st.session_state.get("file_directory"), "output")
+# st.session_state["output_directory"] = os.path.join(st.session_state.get("file_directory"), "output")
+st.session_state["output_directory"] = str(Path(st.session_state.get("file_directory", None)).expanduser().resolve())
 # Initialize variables
 file_directory = st.session_state.get("file_directory", None)
 files = []

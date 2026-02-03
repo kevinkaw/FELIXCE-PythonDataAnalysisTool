@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 
 # import variables
 if "file_directory" in st.session_state:
@@ -19,7 +20,7 @@ if st.button("Apply count filter"):
 
 
 # Read HTML file
-html_file_path = file_directory + r"/output/Table_UniqueWavenumbers.html"
+html_file_path = os.path.join(file_directory, "Table_UniqueWavenumbers.html")
 with open(html_file_path, 'r') as file:
     html_content = file.read()
 
