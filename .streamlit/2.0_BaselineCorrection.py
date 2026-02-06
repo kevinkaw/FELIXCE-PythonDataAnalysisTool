@@ -48,6 +48,8 @@ with col1:
     st.markdown("#### Baseline parameters")
     st.session_state["baseline_reference"] = float(st.text_input("start of baseline in amu",value =st.session_state.get("baseline_reference", defaults["baseline_reference"])))
     st.session_state["baseline_width"] = float(st.text_input("width of baseline in amu", value = st.session_state.get("baseline_width", defaults["baseline_width"])))
+    st.session_state["baseline_manual_withoutIR"] = (st.text_input("manual baseline value for signal without IR irradiation (optional)", value = st.session_state.get("baseline_manual_withoutIR", None)))
+    st.session_state["baseline_manual_withIR"] = (st.text_input("manual baseline value for signal with IR irradiation (optional)", value = st.session_state.get("baseline_manual_withIR", None)))
 
 with col3:
     # Plot parameters
@@ -75,6 +77,8 @@ if st.button("✨ Register parameters and make plot!"):
     plot_wavenumber = st.session_state.get("plot_wavenumber",None)
     baseline_reference = st.session_state.get("baseline_reference", None)
     baseline_width = st.session_state.get("baseline_width", None)
+    baseline_manual_withoutIR = st.session_state.get("baseline_manual_withoutIR", None)
+    baseline_manual_withIR = st.session_state.get("baseline_manual_withIR", None)
     baseline_ymax_top = st.session_state.get("baseline_ymax_top", None)
     baseline_ymax_bottom = st.session_state.get("baseline_ymax_bottom", None)
     
@@ -88,6 +92,8 @@ if st.button("✨ Register parameters and make plot!"):
     # Perform baseline correction
     baseline_correction = baseline(baseline_reference = baseline_reference, \
                                 interval = baseline_width, \
+                                manual_baseline_withoutIR = baseline_manual_withoutIR, \
+                                manual_baseline_withIR = baseline_manual_withIR, \
                                 wavenumber = plot_wavenumber, \
                                 column_withoutIR = compiled_data[plot_wavenumber].columns[plot_columnIndex_withoutIR], \
                                 column_withIR = compiled_data[plot_wavenumber].columns[plot_columnIndex_withIR], \

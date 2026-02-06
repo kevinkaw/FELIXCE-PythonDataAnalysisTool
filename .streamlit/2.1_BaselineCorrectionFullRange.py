@@ -39,7 +39,9 @@ complex = st.session_state.get("complex", None)
 mass_complex = st.session_state.get("mass_complex", None)
 mass_range_indices = st.session_state.get("mass_range_indices", None)
 baseline_range_indices = st.session_state.get("baseline_range_indices",None)
+baseline_manual_value = st.session_state.get("baseline_manual_value", None)
 plot_wavenumber = st.session_state.get("plot_wavenumber", None)
+
 
 
 if st.button("**:blue[#1]** ✨ Perform baseline correction - full range"):
@@ -47,8 +49,13 @@ if st.button("**:blue[#1]** ✨ Perform baseline correction - full range"):
     # Initialize variable
     compilation_baseline_corrected_data = {}
     baseline_correction_fullrange = {}
+    baseline_manual_withoutIR = st.session_state.get("baseline_manual_withoutIR", None)
+    baseline_manual_withIR = st.session_state.get("baseline_manual_withIR", None)
 
-    baseline_correction_fullrange = baseline(baseline_reference = baseline_reference, interval = baseline_width, mass_range=x_mass)
+    if baseline_manual_withoutIR is not None or baseline_manual_withIR is not None:
+        st.info(f"Manual baseline values provided: without IR = {baseline_manual_withoutIR}, \n with IR = {baseline_manual_withIR}. These values will be used for baseline correction.")
+
+    baseline_correction_fullrange = baseline(baseline_reference = baseline_reference, interval = baseline_width, manual_baseline_withoutIR = baseline_manual_withoutIR, manual_baseline_withIR = baseline_manual_withIR, mass_range=x_mass)
     compilation_baseline_corrected_data = baseline_correction_fullrange.baseline_correction_fullrange_sum(compiled_data, unique_wavenumbers, baseline_range_indices)
 
     # export mass spectra

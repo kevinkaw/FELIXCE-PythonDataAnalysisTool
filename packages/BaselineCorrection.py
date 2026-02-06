@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import streamlit as st
 
 __all__ = ['mass_range', 'baseline']
 
@@ -77,7 +78,7 @@ def mass_range(n_element1, n_element2, element1, element2, mass_element1, mass_e
 
 class baseline:
 
-    def __init__(self, baseline_reference = None, interval = None, wavenumber = None, column_withoutIR = None, column_withIR = None, data_withoutIR = None, data_withIR = None, mass_range = None):
+    def __init__(self, baseline_reference = None, interval = None, manual_baseline_withoutIR = None, manual_baseline_withIR = None, wavenumber = None,column_withoutIR = None, column_withIR = None, data_withoutIR = None, data_withIR = None, mass_range = None):
         """
         Initialize baseline correction class for mass spectrometry data analysis.
         
@@ -129,6 +130,8 @@ class baseline:
         # Baseline parameters
         self.baseline_reference = baseline_reference
         self.interval = interval  # Define mass range based on the interval
+        self.baseline_manual_withoutIR = float(manual_baseline_withoutIR) if manual_baseline_withoutIR is not None else None
+        self.baseline_manual_withIR = float(manual_baseline_withIR) if manual_baseline_withIR is not None else None
         
         # Data identifiers
         self.wavenumber = wavenumber
@@ -207,12 +210,18 @@ class baseline:
             - The baseline range should represent a region with minimal signal variation
             - These mean values are subsequently used in baseline_correction() method
         """
-        
+        if self.baseline_manual_withoutIR is not None or self.baseline_manual_withIR is not None:
+            st.info(f"Using manual baseline value of {self.baseline_manual_withoutIR} for correction without IR.")
+            st.info(f"Using manual baseline value of {self.baseline_manual_withIR} for correction with IR.")
+            self.mean_value_withoutIR = self.baseline_manual_withoutIR
+            self.mean_value_withIR = self.baseline_manual_withIR
+            return self.mean_value_withoutIR, self.mean_value_withIR
         # self.baseline_range()
-        self.mean_value_withoutIR = np.mean(self.data_withoutIR[self.baseline_range_indices])
-        self.mean_value_withIR = np.mean(self.data_withIR[self.baseline_range_indices])
+        else:
+            self.mean_value_withoutIR = np.mean(self.data_withoutIR[self.baseline_range_indices])
+            self.mean_value_withIR = np.mean(self.data_withIR[self.baseline_range_indices])
 
-        return self.mean_value_withoutIR, self.mean_value_withIR
+            return self.mean_value_withoutIR, self.mean_value_withIR
  
 
     def baseline_correction(self):
@@ -388,9 +397,13 @@ class baseline:
             sum_withoutIR = compiled_data[wavenumber].iloc[:,0 ::2].sum(axis=1)
             sum_withIR = compiled_data[wavenumber].iloc[:,1 ::2].sum(axis=1)
 
-            # calculate the mean of the baseline region
-            mean_value_withoutIR = np.mean(sum_withoutIR[baseline_range_indices])
-            mean_value_withIR = np.mean(sum_withIR[baseline_range_indices])
+            if self.baseline_manual_withoutIR is not None or self.baseline_manual_withIR is not None:
+                mean_value_withoutIR = self.baseline_manual_withoutIR
+                mean_value_withIR = self.baseline_manual_withIR
+            else:
+                # calculate the mean of the baseline region
+                mean_value_withoutIR = np.mean(sum_withoutIR[baseline_range_indices])
+                mean_value_withIR = np.mean(sum_withIR[baseline_range_indices])
 
             # perform baseline correction
             baseline_corrected_sum_withoutIR = sum_withoutIR - mean_value_withoutIR
