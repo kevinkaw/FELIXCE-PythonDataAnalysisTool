@@ -134,7 +134,8 @@ if st.button("✨ Analyze!"):
     ln_depletion_ymax = st.session_state.get("ln_depletion_ymax", None)
     save_output = st.session_state.get("save_output")
     output_directory = st.session_state.get("output_directory", None)
-
+    baseline_manual_withoutIR = st.session_state.get("baseline_manual_withoutIR", None)
+    baseline_manual_withIR = st.session_state.get("baseline_manual_withIR", None)
     
     # Calculate depletioin
     # initialize class
@@ -376,7 +377,11 @@ if st.button("✨ Analyze!"):
         ax.hlines(1,xmin = data[:,0][0], xmax =data[:,0][-1], color="lime")
 
         mass_label = [round(item,2) for item in isotope_mass_peaks]
-        textstr = f"Complex: {complex} \nMass peaks: {mass_label} amu \nIntegration width = {isotope_scan_width} amu\nBaseline reference: {baseline_reference} amu \nBaseline width = {baseline_width} amu"
+
+        if baseline_manual_withoutIR is not None and baseline_manual_withIR is not None:
+            textstr = f"Complex: {complex} \nMass peaks: {mass_label} amu \nIntegration width = {isotope_scan_width} amu\nManual baseline without IR: {baseline_manual_withoutIR}\nManual baseline with IR: {baseline_manual_withIR}"
+        else:
+            textstr = f"Complex: {complex} \nMass peaks: {mass_label} amu \nIntegration width = {isotope_scan_width} amu\nBaseline reference: {baseline_reference} amu \nBaseline width = {baseline_width} amu"
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
 
         # Place a text box in the plot
@@ -435,7 +440,11 @@ if st.button("✨ Analyze!"):
         ax.hlines(0,xmin = data[:,0][0], xmax =data[:,0][-1], color="lime")
 
         mass_label = [round(item,2) for item in isotope_mass_peaks]
-        textstr = f"Complex: {complex} \nMass peaks: {mass_label} amu \nIntegration width = {isotope_scan_width} amu\nBaseline reference: {baseline_reference} amu \nBaseline width = {baseline_width} amu"
+
+        if baseline_manual_withoutIR is not None and baseline_manual_withIR is not None:
+            textstr = f"Complex: {complex} \nMass peaks: {mass_label} amu \nIntegration width = {isotope_scan_width} amu\nManual baseline without IR: {baseline_manual_withoutIR}\nManual baseline with IR: {baseline_manual_withIR}"
+        else:
+            textstr = f"Complex: {complex} \nMass peaks: {mass_label} amu \nIntegration width = {isotope_scan_width} amu\nBaseline reference: {baseline_reference} amu \nBaseline width = {baseline_width} amu"
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
 
         # Place a text box in the plot
