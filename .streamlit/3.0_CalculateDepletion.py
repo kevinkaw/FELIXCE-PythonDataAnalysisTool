@@ -16,8 +16,12 @@ def load_defaults():
         try:
             config.read(defaults_file)
             # Update defaults with values from file
+            defaults['depletion_xmin'] = config.getfloat('Plot Parameters', 'depletion_xmin')
+            defaults['depletion_xmax'] = config.getfloat('Plot Parameters', 'depletion_xmax')   
             defaults["depletion_ymin"] = config.getfloat('Plot Parameters', 'depletion_ymin')
             defaults["depletion_ymax"] = config.getfloat('Plot Parameters', 'depletion_ymax')
+            defaults["ln_depletion_xmin"] = config.getfloat('Plot Parameters', 'ln_depletion_xmin') 
+            defaults["ln_depletion_xmax"] = config.getfloat('Plot Parameters', 'ln_depletion_xmax')
             defaults["ln_depletion_ymin"] = config.getfloat('Plot Parameters', 'ln_depletion_ymin')
             defaults["ln_depletion_ymax"] = config.getfloat('Plot Parameters', 'ln_depletion_ymax')
             defaults["scan_width"] = config.getfloat('Integration Parameters', 'scan_width')
@@ -42,7 +46,7 @@ plot_columnIndex_withIR = st.session_state.get("plot_columnIndex_withIR", None)
 compilation_baseline_corrected_data = st.session_state.get("compilation_baseline_corrected_data", None)
 
 
-col1,col2,col3,col4,col5,col6 = st.columns([1,1,0.1,1,1,1]) # col 3 for spacing
+col1,col2,col3,col4 = st.columns([0.5,0.5,0.05, 1]) # col 3 for spacing
 
 with col1:
     # Integration parameters
@@ -92,24 +96,42 @@ with col2:
 with col4:
     # Plot parameters
     st.markdown("#### Plot parameters")
-    st.session_state["plot_columnIndex_withoutIR"] = int(st.number_input("Column index for signal without IR irradiation", value = st.session_state.get("plot_columnIndex_withoutIR", None)))
-    st.session_state["plot_columnIndex_withIR"] = int(st.number_input("Column index for signal with IR irradiation", value = st.session_state.get("plot_columnIndex_withIR", None)))
-    st.session_state["plot_wavenumber"] = float(st.text_input("Wavenumber to check plots", value = st.session_state.get("plot_wavenumber", None)))
-    
 
-with col5:
-    st.markdown("#### ")
-    st.session_state["mass_xmin"] = float(st.text_input("Mass Spectra: minimum x-value", value = st.session_state.get("mass_xmin", None)))
-    st.session_state["mass_xmax"] = float(st.text_input("Mass Spectra: maximum x-value", value = st.session_state.get("mass_xmax", None)))
-    st.session_state["mass_ymax"] = float(st.text_input("Mass Spectra: maximum y-value", value = st.session_state.get("mass_ymax", None)))
+    tab1, tab2, tab3= st.tabs(["📈 Mass spectra ", "💥 Depletion", "💥 -ln(depletion)"])
     
+    with tab1:
 
-with col6:
-    st.markdown("#### ")
-    st.session_state["depletion_ymin"] = float(st.text_input("Depletion: minimum y-value", st.session_state.get("depletion_ymin", defaults.get("depletion_ymin", None))))
-    st.session_state["depletion_ymax"] = float(st.text_input("Depletion: maximum y-value", st.session_state.get("depletion_ymax", defaults.get("depletion_ymax", None))))
-    st.session_state["ln_depletion_ymin"] = float(st.text_input("-ln(depletion): minimum y-value", st.session_state.get("ln_depletion_ymin", defaults.get("ln_depletion_ymin", None))))
-    st.session_state["ln_depletion_ymax"] = float(st.text_input("-ln(depletion): maximum y-value", st.session_state.get("ln_depletion_ymax", defaults.get("ln_depletion_ymax", None))))
+        col1, col2 = st.columns([1,1])
+        with col1:
+            
+            st.session_state["plot_wavenumber"] = float(st.text_input("Wavenumber to check plots", value = st.session_state.get("plot_wavenumber", None)))
+            st.markdown('#')
+            st.session_state["mass_xmin"] = float(st.text_input("Mass Spectra: minimum x-value", value = st.session_state.get("mass_xmin", None)))
+            st.session_state["mass_xmax"] = float(st.text_input("Mass Spectra: maximum x-value", value = st.session_state.get("mass_xmax", None)))
+            
+        with col2:
+            st.session_state["plot_columnIndex_withoutIR"] = int(st.number_input("Column index for signal without IR irradiation", value = st.session_state.get("plot_columnIndex_withoutIR", None)))
+            st.session_state["plot_columnIndex_withIR"] = int(st.number_input("Column index for signal with IR irradiation", value = st.session_state.get("plot_columnIndex_withIR", None)))
+            st.session_state["mass_ymin"] = float(st.text_input("Mass Spectra: minimum y-value", value = st.session_state.get("mass_ymin", defaults.get("mass_ymin", None))))
+            st.session_state["mass_ymax"] = float(st.text_input("Mass Spectra: maximum y-value", value = st.session_state.get("mass_ymax", None)))
+    with tab2:
+
+        col1, col2 = st.columns([1,1])
+        with col1:
+            st.session_state["depletion_xmin"] = float(st.text_input("Depletion: minimum x-value", st.session_state.get("depletion_xmin", defaults.get("depletion_xmin", None))))
+            st.session_state["depletion_xmax"] = float(st.text_input("Depletion: maximum x-value", st.session_state.get("depletion_xmax", defaults.get("depletion_xmax", None))))
+        with col2:
+            st.session_state["depletion_ymin"] = float(st.text_input("Depletion: minimum y-value", st.session_state.get("depletion_ymin", defaults.get("depletion_ymin", None))))
+            st.session_state["depletion_ymax"] = float(st.text_input("Depletion: maximum y-value", st.session_state.get("depletion_ymax", defaults.get("depletion_ymax", None))))        
+    with tab3:
+        col1, col2 = st.columns([1,1])
+        with col1:
+            st.session_state["ln_depletion_xmin"] = float(st.text_input("-ln(depletion): minimum x-value", st.session_state.get("ln_depletion_xmin", defaults.get("ln_depletion_xmin", None))))
+            st.session_state["ln_depletion_xmax"] = float(st.text_input("-ln(depletion): maximum x-value", st.session_state.get("ln_depletion_xmax", defaults.get("ln_depletion_xmax", None))))
+        with col2:
+            st.session_state["ln_depletion_ymin"] = float(st.text_input("-ln(depletion): minimum y-value", st.session_state.get("ln_depletion_ymin", defaults.get("ln_depletion_ymin", None))))
+            st.session_state["ln_depletion_ymax"] = float(st.text_input("-ln(depletion): maximum y-value", st.session_state.get("ln_depletion_ymax", defaults.get("ln_depletion_ymax", None))))
+
 
 if st.button("✨ Analyze!"):
     # Error checking
@@ -127,9 +149,14 @@ if st.button("✨ Analyze!"):
     isotope_scan_width = st.session_state.get("isotope_scan_width", None)
     mass_xmin = st.session_state.get("mass_xmin", None)
     mass_xmax = st.session_state.get("mass_xmax", None)
+    mass_ymin = st.session_state.get("mass_ymin", None)
     mass_ymax = st.session_state.get("mass_ymax", None)
+    depletion_xmin = st.session_state.get("depletion_xmin", None)
+    depletion_xmax = st.session_state.get("depletion_xmax", None)
     depletion_ymin = st.session_state.get("depletion_ymin", None)
     depletion_ymax = st.session_state.get("depletion_ymax", None)
+    ln_depletion_xmin = st.session_state.get("ln_depletion_xmin", None)
+    ln_depletion_xmax = st.session_state.get("ln_depletion_xmax", None)
     ln_depletion_ymin = st.session_state.get("ln_depletion_ymin", None)
     ln_depletion_ymax = st.session_state.get("ln_depletion_ymax", None)
     save_output = st.session_state.get("save_output")
@@ -295,6 +322,8 @@ if st.button("✨ Analyze!"):
         # Display plot in Streamlit
         st.plotly_chart(fig)
 
+        # Expected isotopomeric mass distribution
+        
 
         # matplotlib static plot
         st.markdown("###### *:green[Static plot with matplotlib]*")
@@ -358,6 +387,7 @@ if st.button("✨ Analyze!"):
         # Update layout for the plot
         fig.update_layout(
             yaxis=dict(range=[depletion_ymin, depletion_ymax]),
+            xaxis=dict(range=[depletion_xmin, depletion_xmax]),
             xaxis_title="wavenumber (cm⁻¹)",
             yaxis_title="Intensity",
             title= IR_yield_spectra.columns[3] + " " + complex,
@@ -391,6 +421,7 @@ if st.button("✨ Analyze!"):
                 verticalalignment='top', bbox=props)
         
         ax.set_ylim(depletion_ymin,depletion_ymax)
+        ax.set_xlim(depletion_xmin, depletion_xmax) 
         ax.set_xlabel("wavenumber (cm⁻¹)")
 
         st.pyplot(fig)
@@ -421,6 +452,7 @@ if st.button("✨ Analyze!"):
         # Update layout for the plot
         fig.update_layout(
             yaxis=dict(range=[ln_depletion_ymin, ln_depletion_ymax]),
+            xaxis=dict(range=[ln_depletion_xmin, ln_depletion_xmax]),
             xaxis_title="wavenumber (cm⁻¹)",
             yaxis_title="Intensity",
             title= IR_yield_spectra.columns[4] + " " + complex,
@@ -452,9 +484,10 @@ if st.button("✨ Analyze!"):
                 verticalalignment='top', bbox=props)
 
         ax.set_ylim(ln_depletion_ymin,ln_depletion_ymax)
+        ax.set_xlim(ln_depletion_xmin, ln_depletion_xmax)
         ax.set_xlabel("wavenumber (cm⁻¹)")
 
         st.pyplot(fig)
 
-    st.markdown(f"#### Full range depletion data {complex}:")
+    st.markdown(f"#### Full range data {complex}:")
     st.table(IR_yield_spectra)

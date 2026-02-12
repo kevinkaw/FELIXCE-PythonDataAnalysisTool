@@ -20,6 +20,7 @@ def load_defaults():
             defaults["plot_wavenumber"] = config.getfloat('Plot Parameters', 'plot_wavenumber')
             defaults["mass_xmin"] = config.getfloat('Plot Parameters', 'mass_xmin')
             defaults["mass_xmax"] = config.getfloat('Plot Parameters', 'mass_xmax')
+            defaults["mass_ymin"] = config.getfloat('Plot Parameters', 'mass_ymin')
             defaults["mass_ymax"] = config.getfloat('Plot Parameters', 'mass_ymax')
             defaults["plot_columnIndex_withoutIR"] = config.getint('Plot Parameters', 'plot_columnIndex_withoutIR')
             defaults["plot_columnIndex_withIR"] = config.getint('Plot Parameters', 'plot_columnIndex_withIR')
@@ -96,13 +97,15 @@ if st.button("**:blue[#2]** 🚢 Export baseline corrected data"):
 
 st.markdown("#### Plot parameters")
 
-col1, col2, col3, col4, col5 = st.columns([0.4,0.05,0.7,0.05, 1])
+col1, col2, col3, col4, col5 = st.columns([0.5,0.05,0.7,0.7, 1])
 with col1:
     st.session_state["plot_wavenumber"] = float(st.text_input("Wavenumber to check plots", value = st.session_state.get("plot_wavenumber", defaults.get("plot_wavenumber", None))))
-    st.session_state["mass_ymax"] = float(st.text_input("Maximum y-value", value = st.session_state.get("mass_ymax", defaults.get("mass_ymax", None))))
 with col3:
     st.session_state["mass_xmin"] = float(st.text_input("Minimum x-value", value = st.session_state.get("mass_xmin", defaults.get("mass_xmin", None))))
     st.session_state["mass_xmax"] = float(st.text_input("Maximum x-value", value = st.session_state.get("mass_xmax", defaults.get("mass_xmax", None))))
+with col4:
+    st.session_state["mass_ymin"] = float(st.text_input("Minimum y-value", value = st.session_state.get("mass_ymin", defaults.get("mass_ymin", None))))
+    st.session_state["mass_ymax"] = float(st.text_input("Maximum y-value", value = st.session_state.get("mass_ymax", defaults.get("mass_ymax", None))))
 with col5:
     st.session_state["plot_columnIndex_withoutIR"] = int(st.number_input("Column index for signal without IR irradiation", value = st.session_state.get("plot_columnIndex_withoutIR", defaults.get("plot_columnIndex_withoutIR", None))))
     st.session_state["plot_columnIndex_withIR"] = int(st.number_input("Column index for signal with IR irradiation", value = st.session_state.get("plot_columnIndex_withIR", defaults.get("plot_columnIndex_withIR", None))))
