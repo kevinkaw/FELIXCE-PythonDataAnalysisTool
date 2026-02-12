@@ -59,14 +59,14 @@ with col3:
 
     col1, col2 = st.columns([1,1])
     with col1:        
-        st.session_state["plot_wavenumber"] = float(st.text_input("Wavenumber to check plots", value = st.session_state.get("plot_wavenumber", None)))
+        st.session_state["plot_wavenumber"] = float(st.text_input("Wavenumber to check plots", value = st.session_state.get("plot_wavenumber", defaults.get("plot_wavenumber", None))))
         st.markdown('#')
         st.session_state["mass_xmin"] = float(st.text_input("Mass Spectra: minimum x-value", value = st.session_state.get("mass_xmin", defaults.get("mass_xmin", None))))
         st.session_state["mass_xmax"] = float(st.text_input("Mass Spectra: maximum x-value", value = st.session_state.get("mass_xmax", defaults.get("mass_xmax", None))))
         
     with col2:
-        st.session_state["plot_columnIndex_withoutIR"] = int(st.number_input("Column index for signal without IR irradiation", value = st.session_state.get("plot_columnIndex_withoutIR", None)))
-        st.session_state["plot_columnIndex_withIR"] = int(st.number_input("Column index for signal with IR irradiation", value = st.session_state.get("plot_columnIndex_withIR", None)))
+        st.session_state["plot_columnIndex_withoutIR"] = int(st.number_input("Column index for signal without IR irradiation", value = st.session_state.get("plot_columnIndex_withoutIR", defaults.get("plot_columnIndex_withoutIR", None))))
+        st.session_state["plot_columnIndex_withIR"] = int(st.number_input("Column index for signal with IR irradiation", value = st.session_state.get("plot_columnIndex_withIR", defaults.get("plot_columnIndex_withIR", None))))
         st.session_state["baseline_ymax_top"] = float(st.text_input("Maximum y-value for top plot", value = st.session_state.get("baseline_ymax_top",defaults["baseline_ymax_top"])))
         st.session_state["baseline_ymax_bottom"] = float(st.text_input("Maximum y-value for bottom plot", value = st.session_state.get("baseline_ymax_bottom",defaults["baseline_ymax_bottom"])))
 
@@ -274,7 +274,7 @@ if st.button("✨ Register parameters and make plot!"):
 
     with tab2:
         # Plot raw data and baseline corrected data
-        fig,ax = plt.subplots(2,1, dpi=300, sharex=True)
+        fig,ax = plt.subplots(2,1, dpi=600, sharex=True)
 
         ax[0].axvline(mass_complex, alpha=0.75,linestyle="solid",linewidth=1, color="green", label = complex)
         ax[0].plot(x_mass[mass_range_indices], compiled_data[plot_wavenumber].iloc[mass_range_indices,plot_columnIndex_withoutIR], label =compiled_data[plot_wavenumber].columns[plot_columnIndex_withoutIR])

@@ -327,7 +327,7 @@ if st.button("✨ Analyze!"):
 
         # matplotlib static plot
         st.markdown("###### *:green[Static plot with matplotlib]*")
-        fig, ax = plt.subplots(figsize=(5, 3),dpi=300)
+        fig, ax = plt.subplots(figsize=(5, 3),dpi=600)
 
         ax.axvline(mass_complex,alpha=0.75,linestyle="solid",linewidth=2, color="green", label= f"{complex} average mass")
         
@@ -399,7 +399,7 @@ if st.button("✨ Analyze!"):
         # Static plot - matplotlib
         st.markdown("###### *:green[Static plot with matplotlib]*")
 
-        fig, ax = plt.subplots(figsize=(8, 3),dpi=300)
+        fig, ax = plt.subplots(figsize=(8, 3),dpi=600)
 
         ax.plot(data[:,0],data[:,3])
         ax.scatter(data[:,0],data[:,3])
@@ -464,7 +464,7 @@ if st.button("✨ Analyze!"):
         # Static plot - matplotlib
         st.markdown("###### *:green[Static plot with matplotlib]*")
 
-        fig, ax = plt.subplots(figsize=(8, 3),dpi=300)
+        fig, ax = plt.subplots(figsize=(8, 3),dpi=600)
 
         ax.plot(data[:,0],data[:,4])
         ax.scatter(data[:,0],data[:,4])
