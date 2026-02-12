@@ -406,7 +406,7 @@ if st.button("✨ Analyze!"):
         ax.legend([IR_yield_spectra.columns[3]], fontsize=7,  loc = "upper right")
         ax.hlines(1,xmin = data[:,0][0], xmax =data[:,0][-1], color="lime")
 
-        mass_label = [round(item,2) for item in isotope_mass_peaks]
+        mass_label = [f"{item:.2f}" for item in isotope_mass_peaks]
 
         if baseline_manual_withoutIR is not None and baseline_manual_withIR is not None:
             textstr = f"Complex: {complex} \nMass peaks: {mass_label} amu \nIntegration width = {isotope_scan_width} amu\nManual baseline without IR: {baseline_manual_withoutIR}\nManual baseline with IR: {baseline_manual_withIR}"
@@ -471,7 +471,7 @@ if st.button("✨ Analyze!"):
         ax.legend([IR_yield_spectra.columns[4]], fontsize=7, loc = "upper right")
         ax.hlines(0,xmin = data[:,0][0], xmax =data[:,0][-1], color="lime")
 
-        mass_label = [round(item,2) for item in isotope_mass_peaks]
+        mass_label = [f"{item:.2f}" for item in isotope_mass_peaks]
 
         if baseline_manual_withoutIR is not None and baseline_manual_withIR is not None:
             textstr = f"Complex: {complex} \nMass peaks: {mass_label} amu \nIntegration width = {isotope_scan_width} amu\nManual baseline without IR: {baseline_manual_withoutIR}\nManual baseline with IR: {baseline_manual_withIR}"
