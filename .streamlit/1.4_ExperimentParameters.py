@@ -28,16 +28,20 @@ defaults = load_defaults()
 
 
 
-col1,col2,col3 = st.columns([1,0.1,3]) # col2 is just for spacing
+col1,col2,col3 = st.columns([0.5,0.1,1]) # col2 is just for spacing
 
 with col1:
     # Species parameters
     st.markdown("### Species parameters")
-    st.session_state["element1"] = st.text_input("Element1", value = st.session_state.get("element1", defaults['element1']))
-    st.session_state["mass_element1"] = float(st.text_input("Mass of element1 in amu", value = st.session_state.get("mass_element1", defaults['mass_element1'])))
-    st.session_state["charge_state"] = st.text_input("Charge state", st.session_state.get("charge_state", defaults['charge_state']))
-    st.session_state["element2"] = st.text_input("Element 2", value = st.session_state.get("element2", defaults['element2']))
-    st.session_state["mass_element2"] = float(st.text_input("Mass of element2 in amu", value = st.session_state.get("mass_element2", defaults['mass_element2'])))
+
+    col1, col2 = st.columns([1,1])
+    with col1:
+        st.session_state["element1"] = st.text_input("Element1", value = st.session_state.get("element1", defaults['element1']))
+        st.session_state["element2"] = st.text_input("Element 2", value = st.session_state.get("element2", defaults['element2']))
+        st.session_state["charge_state"] = st.text_input("Charge state", st.session_state.get("charge_state", defaults['charge_state']))
+    with col2:
+        st.session_state["mass_element1"] = float(st.text_input("Mass of element1 in amu", value = st.session_state.get("mass_element1", defaults['mass_element1'])))
+        st.session_state["mass_element2"] = float(st.text_input("Mass of element2 in amu", value = st.session_state.get("mass_element2", defaults['mass_element2'])))
 with col3:
     # Calibration parameters
     st.markdown("### Calibration parameters")

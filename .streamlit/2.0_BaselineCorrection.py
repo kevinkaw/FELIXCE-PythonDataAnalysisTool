@@ -25,6 +25,8 @@ def load_defaults():
             defaults['plot_wavenumber'] = config.getfloat('Plot Parameters', 'plot_wavenumber')
             defaults["baseline_ymax_top"] = config.getfloat('Baseline Parameters', 'baseline_ymax_top')
             defaults["baseline_ymax_bottom"] = config.getfloat('Baseline Parameters', 'baseline_ymax_bottom')
+            defaults["mass_xmin"] = config.getfloat('Plot Parameters', 'mass_xmin')
+            defaults["mass_xmax"] = config.getfloat('Plot Parameters', 'mass_xmax')
 
         except (configparser.Error, ValueError) as e:
             st.warning(f"Error reading defaults.ini: {e}.")
@@ -36,14 +38,14 @@ x_mass = st.session_state.get("x_mass", None)
 x_mass_perAtom = st.session_state.get("x_mass_perAtom", None)
 
 
-col1,col2,col3 = st.columns([1,0.1,3]) # col2 is just for spacing
+col1,col2,col3 = st.columns([0.5,0.5,1]) # col2 is just for spacing
 
 with col1:
     # Complex parameters
     st.markdown("#### Complex parameters")
     st.session_state["n_element1"] = st.number_input("size of main element", value = st.session_state.get("n_element1",defaults["n_element1"]))
     st.session_state["n_element2"] = st.number_input("size of messenger species", value = st.session_state.get("n_element2",defaults["n_element2"]))
-
+with col2:
     # Baseline parameters
     st.markdown("#### Baseline parameters")
     st.session_state["baseline_reference"] = float(st.text_input("start of baseline in amu",value =st.session_state.get("baseline_reference", defaults["baseline_reference"])))
@@ -54,12 +56,19 @@ with col1:
 with col3:
     # Plot parameters
     st.markdown("#### Plot parameters")
-    st.session_state["plot_wavenumber"] = float(st.text_input("Wavenumber to check plots", value = st.session_state.get("plot_wavenumber",defaults["plot_wavenumber"])))
-    st.session_state["baseline_ymax_top"] = float(st.text_input("Maximum y-value for top plot", value = st.session_state.get("baseline_ymax_top",defaults["baseline_ymax_top"])))
-    st.session_state["baseline_ymax_bottom"] = float(st.text_input("Maximum y-value for bottom plot", value = st.session_state.get("baseline_ymax_bottom",defaults["baseline_ymax_bottom"])))
-    st.session_state["plot_columnIndex_withoutIR"] = int(st.number_input("Column index for signal without IR irradiation", value = st.session_state.get("plot_columnIndex_withoutIR", defaults["plot_columnIndex_withoutIR"])))
-    st.session_state["plot_columnIndex_withIR"] = int(st.number_input("Column index for signal with IR irradiation", value = st.session_state.get("plot_columnIndex_withIR", defaults["plot_columnIndex_withIR"]))) 
 
+    col1, col2 = st.columns([1,1])
+    with col1:        
+        st.session_state["plot_wavenumber"] = float(st.text_input("Wavenumber to check plots", value = st.session_state.get("plot_wavenumber", None)))
+        st.markdown('#')
+        st.session_state["mass_xmin"] = float(st.text_input("Mass Spectra: minimum x-value", value = st.session_state.get("mass_xmin", defaults.get("mass_xmin", None))))
+        st.session_state["mass_xmax"] = float(st.text_input("Mass Spectra: maximum x-value", value = st.session_state.get("mass_xmax", defaults.get("mass_xmax", None))))
+        
+    with col2:
+        st.session_state["plot_columnIndex_withoutIR"] = int(st.number_input("Column index for signal without IR irradiation", value = st.session_state.get("plot_columnIndex_withoutIR", None)))
+        st.session_state["plot_columnIndex_withIR"] = int(st.number_input("Column index for signal with IR irradiation", value = st.session_state.get("plot_columnIndex_withIR", None)))
+        st.session_state["baseline_ymax_top"] = float(st.text_input("Maximum y-value for top plot", value = st.session_state.get("baseline_ymax_top",defaults["baseline_ymax_top"])))
+        st.session_state["baseline_ymax_bottom"] = float(st.text_input("Maximum y-value for bottom plot", value = st.session_state.get("baseline_ymax_bottom",defaults["baseline_ymax_bottom"])))
 
 # BUTTON
 if st.button("✨ Register parameters and make plot!"):
