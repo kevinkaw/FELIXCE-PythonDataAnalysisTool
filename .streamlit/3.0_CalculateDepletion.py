@@ -347,7 +347,7 @@ if st.button("✨ Analyze!"):
         ax.hlines(0,xmin = x_mass[mass_range_indices][0], xmax =x_mass[mass_range_indices][-1], color="lime")
 
         ax.set_xlim(mass_xmin, mass_xmax)
-        ax.set_ylim(-0.001, mass_ymax)
+        ax.set_ylim(mass_ymin, mass_ymax)
         # ax.set_ylim(-0.01, y_max2)
         ax.set_xlabel("Mass (amu)")
         ax.set_ylabel("Intensity")
