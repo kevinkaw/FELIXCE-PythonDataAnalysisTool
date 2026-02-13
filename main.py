@@ -28,7 +28,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # 2. Render the logo using sidebar.image (NOT st.logo)
-st.sidebar.image(r"./logo/logo_FELIXCE_solid.png", use_container_width=True)
+st.sidebar.image(r"./logo/logo_FELIXCE_solid.png", width="stretch")
 
 
 # Load sections
