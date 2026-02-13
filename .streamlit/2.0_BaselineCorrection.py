@@ -270,7 +270,7 @@ if st.button("✨ Register parameters and make plot!"):
         fig.update_xaxes(title_text="Mass (amu)", row=2, col=1)
 
         # Display the plot
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with tab2:
         # Plot raw data and baseline corrected data
