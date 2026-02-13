@@ -36,6 +36,7 @@ defaults = load_defaults()
 compiled_data = st.session_state.get("compiled_data", None)
 x_mass = st.session_state.get("x_mass", None)
 x_mass_perAtom = st.session_state.get("x_mass_perAtom", None)
+unique_wavenumbers = st.session_state.get("unique_wavenumbers", None)
 
 
 col1,col2,col3 = st.columns([0.5,0.5,1]) # col2 is just for spacing
@@ -58,8 +59,14 @@ with col3:
     st.markdown("#### Plot parameters")
 
     col1, col2 = st.columns([1,1])
-    with col1:        
-        st.session_state["plot_wavenumber"] = float(st.text_input("Wavenumber to check plots", value = st.session_state.get("plot_wavenumber", defaults.get("plot_wavenumber", None))))
+    with col1:
+
+        if defaults.get("plot_wavenumber", None) in unique_wavenumbers:
+            list_unique_wavenumbers = list(unique_wavenumbers)
+            wavenumber_index = list_unique_wavenumbers.index(defaults["plot_wavenumber"])
+            st.session_state["plot_wavenumber"] = float(st.selectbox("Select from available wavenumbers", options = unique_wavenumbers, index=wavenumber_index))
+        else:
+            st.session_state["plot_wavenumber"] = float(st.selectbox("Select from available wavenumbers", options = unique_wavenumbers))
         st.markdown('#')
         st.session_state["mass_xmin"] = float(st.text_input("Mass Spectra: minimum x-value", value = st.session_state.get("mass_xmin", defaults.get("mass_xmin", None))))
         st.session_state["mass_xmax"] = float(st.text_input("Mass Spectra: maximum x-value", value = st.session_state.get("mass_xmax", defaults.get("mass_xmax", None))))

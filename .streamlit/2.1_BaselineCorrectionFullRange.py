@@ -17,7 +17,6 @@ def load_defaults():
         try:
             config.read(defaults_file)
             # Update defaults with values from file
-            defaults["plot_wavenumber"] = config.getfloat('Plot Parameters', 'plot_wavenumber')
             defaults["mass_xmin"] = config.getfloat('Plot Parameters', 'mass_xmin')
             defaults["mass_xmax"] = config.getfloat('Plot Parameters', 'mass_xmax')
             defaults["mass_ymin"] = config.getfloat('Plot Parameters', 'mass_ymin')
@@ -100,6 +99,7 @@ st.markdown("#### Plot parameters")
 col1, col2, col3, col4, col5 = st.columns([0.5,0.05,0.7,0.7, 1])
 with col1:
     st.session_state["plot_wavenumber"] = float(st.text_input("Wavenumber to check plots", value = st.session_state.get("plot_wavenumber", defaults.get("plot_wavenumber", None))))
+    
 with col3:
     st.session_state["mass_xmin"] = float(st.text_input("Minimum x-value", value = st.session_state.get("mass_xmin", defaults.get("mass_xmin", None))))
     st.session_state["mass_xmax"] = float(st.text_input("Maximum x-value", value = st.session_state.get("mass_xmax", defaults.get("mass_xmax", None))))
