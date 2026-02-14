@@ -10,6 +10,8 @@ dependencies:
   - plotly=6.5.0
   - streamlit=1.54.0
   - h5py=3.15.1
+  - ipykernel=6.31.0
+  - jupyterlab=4.5.3
   - pip
   - pip:
     - st-pages==1.0.1
