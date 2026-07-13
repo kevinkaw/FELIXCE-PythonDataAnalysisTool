@@ -334,7 +334,7 @@ if st.button("✨ Analyze!"):
         # multi peak version
         for index, isotope in enumerate(isotope_mass_peaks):
             plt.axvline(isotope,alpha=0.75,linestyle="solid",linewidth=1, color="black")
-            plt.fill_between(x_mass[isotope_scanwidths[index]],0.5, color = "lightgray")
+            plt.fill_between(x_mass[isotope_scanwidths[index]],0.5, color = "lightgray", zorder=0)
 
 
         ax.axvline(0,0, color='black', label='Isotope peaks')
@@ -343,7 +343,7 @@ if st.button("✨ Analyze!"):
         ax.plot(x_mass[:],compilation_baseline_corrected_data[plot_wavenumber].iloc[:,plot_columnIndex_withoutIR], label=f"{compilation_baseline_corrected_data[plot_wavenumber].columns[plot_columnIndex_withoutIR]}")
         ax.plot(x_mass[:],compilation_baseline_corrected_data[plot_wavenumber].iloc[:,plot_columnIndex_withIR], label = f"{compilation_baseline_corrected_data[plot_wavenumber].columns[plot_columnIndex_withIR]}")
         
-        ax.fill_between(x_mass[baseline_range_indices],0.2, color = "lightsteelblue", label = "baseline range")
+        ax.fill_between(x_mass[baseline_range_indices],0.2, color = "lightsteelblue", label = "baseline range", zorder=0)
         ax.hlines(0,xmin = x_mass[mass_range_indices][0], xmax =x_mass[mass_range_indices][-1], color="lime")
 
         ax.set_xlim(mass_xmin, mass_xmax)
@@ -354,7 +354,7 @@ if st.button("✨ Analyze!"):
         ax.legend(fontsize=6, loc = "upper left")
 
         fig.tight_layout()
-        # fig.savefig("MassSpectra.png", dpi=1000)
+        fig.savefig("FELIXCE_MassSpectra.png", dpi=600, bbox_inches='tight')
         
         st.pyplot(fig)
     
@@ -403,7 +403,7 @@ if st.button("✨ Analyze!"):
 
         ax.plot(data[:,0],data[:,3])
         ax.scatter(data[:,0],data[:,3])
-        ax.legend([IR_yield_spectra.columns[3]], fontsize=7,  loc = "upper right")
+        ax.legend([IR_yield_spectra.columns[3]], fontsize=10,  loc = "upper left")
         ax.hlines(1,xmin = data[:,0][0], xmax =data[:,0][-1], color="lime")
 
         mass_label = [f"{item:.2f}" for item in isotope_mass_peaks]
@@ -417,12 +417,13 @@ if st.button("✨ Analyze!"):
         # Place a text box in the plot
         # ax.text(0.6, 0.25, textstr, transform=plt.gca().transAxes, fontsize=5,
         #         verticalalignment='top', bbox=props)
-        ax.text(0.01, 0.25, textstr, transform=plt.gca().transAxes, fontsize=7,
-                verticalalignment='top', bbox=props)
+        ax.text(0.01, 0.03, textstr, transform=plt.gca().transAxes, fontsize=10,
+                verticalalignment='bottom', bbox=props, zorder=0)
         
         ax.set_ylim(depletion_ymin,depletion_ymax)
         ax.set_xlim(depletion_xmin, depletion_xmax) 
         ax.set_xlabel("wavenumber (cm⁻¹)")
+        fig.savefig("FELIXCE_DepletionSpectra.png", dpi=600, bbox_inches='tight')
 
         st.pyplot(fig)
 
@@ -468,7 +469,7 @@ if st.button("✨ Analyze!"):
 
         ax.plot(data[:,0],data[:,4])
         ax.scatter(data[:,0],data[:,4])
-        ax.legend([IR_yield_spectra.columns[4]], fontsize=7, loc = "upper right")
+        ax.legend([IR_yield_spectra.columns[4]], fontsize=10, loc = "lower right")
         ax.hlines(0,xmin = data[:,0][0], xmax =data[:,0][-1], color="lime")
 
         mass_label = [f"{item:.2f}" for item in isotope_mass_peaks]
@@ -480,12 +481,13 @@ if st.button("✨ Analyze!"):
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
 
         # Place a text box in the plot
-        ax.text(0.01, 0.99, textstr, transform=plt.gca().transAxes, fontsize=7,
-                verticalalignment='top', bbox=props)
+        ax.text(0.01, 0.99, textstr, transform=plt.gca().transAxes, fontsize=10,
+                verticalalignment='top', bbox=props, zorder=0)
 
         ax.set_ylim(ln_depletion_ymin,ln_depletion_ymax)
         ax.set_xlim(ln_depletion_xmin, ln_depletion_xmax)
         ax.set_xlabel("wavenumber (cm⁻¹)")
+        fig.savefig("FELIXCE_lnDepletionSpectra.png", dpi=600, bbox_inches='tight')
 
         st.pyplot(fig)
 
