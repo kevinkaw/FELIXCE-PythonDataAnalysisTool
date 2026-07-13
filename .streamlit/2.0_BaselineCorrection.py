@@ -308,7 +308,7 @@ if st.button("✨ Register parameters and make plot!"):
 
         ax[1].set_xlabel("Mass (amu)")
         fig.supylabel("Intensity (a.u.)")
-        # fig.savefig("baseline_correction_plot.png", dpi=600, bbox_inches='tight')
+        # fig.savefig("FELIXCE_BaselineCorrection.png", dpi=600, bbox_inches='tight')
         # print("Saved baseline_correction_plot.png")
         plt.tight_layout()
         
