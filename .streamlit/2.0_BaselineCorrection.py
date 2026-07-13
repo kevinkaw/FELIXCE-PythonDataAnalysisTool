@@ -306,8 +306,10 @@ if st.button("✨ Register parameters and make plot!"):
         ax[1].set_xlim(mass_complex-5, mass_complex+5)
         ax[1].set_ylim(-0.001, baseline_ymax_bottom)
 
-        fig.supxlabel("Mass (amu)")
+        ax[1].set_xlabel("Mass (amu)")
         fig.supylabel("Intensity (a.u.)")
+        # fig.savefig("baseline_correction_plot.png", dpi=600, bbox_inches='tight')
+        # print("Saved baseline_correction_plot.png")
         plt.tight_layout()
         
         st.pyplot(fig)
