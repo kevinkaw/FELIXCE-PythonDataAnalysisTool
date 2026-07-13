@@ -354,7 +354,7 @@ if st.button("✨ Analyze!"):
         ax.legend(fontsize=6, loc = "upper left")
 
         fig.tight_layout()
-        fig.savefig("FELIXCE_MassSpectra.png", dpi=600, bbox_inches='tight')
+        # fig.savefig("FELIXCE_MassSpectra.png", dpi=600, bbox_inches='tight')
         
         st.pyplot(fig)
     
@@ -423,7 +423,7 @@ if st.button("✨ Analyze!"):
         ax.set_ylim(depletion_ymin,depletion_ymax)
         ax.set_xlim(depletion_xmin, depletion_xmax) 
         ax.set_xlabel("wavenumber (cm⁻¹)")
-        fig.savefig("FELIXCE_DepletionSpectra.png", dpi=600, bbox_inches='tight')
+        # fig.savefig("FELIXCE_DepletionSpectra.png", dpi=600, bbox_inches='tight')
 
         st.pyplot(fig)
 
@@ -487,7 +487,7 @@ if st.button("✨ Analyze!"):
         ax.set_ylim(ln_depletion_ymin,ln_depletion_ymax)
         ax.set_xlim(ln_depletion_xmin, ln_depletion_xmax)
         ax.set_xlabel("wavenumber (cm⁻¹)")
-        fig.savefig("FELIXCE_lnDepletionSpectra.png", dpi=600, bbox_inches='tight')
+        # fig.savefig("FELIXCE_lnDepletionSpectra.png", dpi=600, bbox_inches='tight')
 
         st.pyplot(fig)
 
